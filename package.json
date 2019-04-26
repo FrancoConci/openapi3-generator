@@ -7,6 +7,9 @@
     "og": "./cli.js",
     "openapi3-generator": "./cli.js"
   },
+  "scripts": {
+    "test-skip-existing-files": "node cli.js -t templates tests/openapi3/fidelity.yaml express -o output/ -s -d auto"
+  },
   "bugs": {
     "url": "https://github.com/fmvilas/openapi3-generator/issues"
   },
