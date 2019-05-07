@@ -1,0 +1,26 @@
+ProviderConfigureUpdateRequest:
+  content:
+    application/json:
+      schema:
+        x-visibility: internal
+        properties:
+          name:
+            description: the name of the provider
+            type: string
+          description:
+            description: the description of the provider
+            type: string
+          accessDetails:
+            type: array
+            items:
+              $ref: '../schemas/AccessDetail.yaml#/AccessDetail'
+        required:
+          - name
+          - accessDetail 
+      example:
+        name: Gurado
+        accessDetails: 
+          - name: "apiKey"
+            value: "QHP0BM3FKWBAY7VT92OXJ9XN"
+          - name: "apiSecret"
+            value: "92f0b7ce3a97412c6d98c6339439112"

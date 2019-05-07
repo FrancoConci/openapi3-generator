@@ -1,0 +1,24 @@
+ProviderConfigureCreateRequest:
+  content:
+    application/json:
+      schema:
+        x-visibility: internal
+        properties:
+          providerId:
+            description: the id of the provider
+            type: string
+            format: uuid
+          accessDetails:
+            type: array
+            items:
+              $ref: '../schemas/AccessDetail.yaml#/AccessDetail'
+        required:
+          - name
+          - accessDetail
+      example:
+        providerId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        accessDetails: 
+          - name: "apiKey"
+            value: "QHP0BM3FKWBAY7VT92OXJ9XN"
+          - name: "apiSecret"
+            value: "92f0b7ce3a97412c6d98c6339439112"

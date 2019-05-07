@@ -1,0 +1,13 @@
+AccessDetail:
+  properties:
+    name:
+      description: the name of the access detail
+      type: string
+    value:
+      description: the value of the access detail
+      type: string
+      x-constraints:
+        privacy: secret
+  required:
+    - name
+    - value

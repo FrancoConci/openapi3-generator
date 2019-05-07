@@ -1,0 +1,13 @@
+OperationResult:
+  description: Operation result
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          code:
+            description: operation result code
+            type: string
+          message:
+            description: operation result message.
+            type: string

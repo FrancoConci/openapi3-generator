@@ -1,0 +1,27 @@
+CardTopUpRequest:
+  content:
+    application/json:
+      schema:
+        description: Please note that you must specify amount.
+        properties:
+          providerId:
+            type: string
+            format: uuid
+            description: provider id provided by Mergeport
+          amount:
+            description: Currency value in cents, e.g. 3,20€ would be 320
+            type: integer
+            format: int32
+            minimum: 0
+          quantity:
+            description: refers to an integer value, e.g. 10 coffees.
+            type: integer
+            format: int32
+            minimum: 0
+          currency:
+            description: currency code. Please note that not all providers or cards support currencies.
+            type: string
+        required:
+          - providerId
+      example:
+        providerId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"

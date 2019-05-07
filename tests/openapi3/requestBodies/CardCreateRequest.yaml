@@ -1,0 +1,38 @@
+CardCreateRequest:
+  x-visibility: internal
+  content:
+    application/json:
+      schema:
+        properties:
+          providerId:
+            type: string
+            format: uuid
+            description: provider id provided by Mergeport
+          siteId:
+            type: string
+            format: uuid
+            description: site id provided by Mergeport
+            x-visibility: internal
+          code:
+            description: the card code that identifies the voucher, loyalty or value card.
+            type: string
+          amount:
+            description: Currency value in cents, e.g. 3,20€ would be 320
+            type: integer
+            format: int32
+          quantity:
+            description: refers to an integer value, e.g. 10 coffees.
+            type: integer
+            format: int32
+          currency:
+            description: currency code. Please note that not all providers or cards support currencies.
+            type: string
+          isValid:
+            type: boolean
+      example:
+        providerId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        siteId: 8eee5a92-bf75-4c08-9860-b92c2e0eb5e5
+        code: WPZDN-KPXZ7PPG37
+        quantity: 10
+        currency: EUR
+        isValid: true

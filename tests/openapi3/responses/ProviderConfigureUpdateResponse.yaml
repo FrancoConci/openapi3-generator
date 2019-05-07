@@ -1,0 +1,15 @@
+ProviderConfigureUpdateResponse:
+  description: Details of a provider
+  content:
+    application/json:
+      schema: 
+        $ref: '../schemas/ProviderDetails.yaml#/ProviderDetails'
+      example:
+        id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        name: "Gurado"
+        supportsCurrencies: true
+        accessDetails: 
+          - name: "apiKey"
+            value: "QHP0BM3FKKASRYGKVT92OXJ9XN"
+          - name: "apiSecret"
+            value: "3f15f92d-d933-4d70-a3d2-35823136e96a"

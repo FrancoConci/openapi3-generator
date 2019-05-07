@@ -1,0 +1,25 @@
+ProviderUpdateRequest:
+  x-visibility: internal      
+  content:
+    application/json:
+      schema:
+        x-visibility: internal
+        properties:
+          name:
+            description: the name of the provider
+            type: string
+          description:
+            description: the description of the provider
+            type: string
+          accessDetailNames:
+            description: names of access details required by the provider, e.g. "apiKey", "apiSecret"
+            type: array
+            items:
+              type: string
+        required:
+          - name
+          - accessDetailNames
+      example:
+        accessDetailNames: 
+          - "consumerKey"
+          - "password"

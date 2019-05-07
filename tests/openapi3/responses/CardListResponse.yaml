@@ -1,0 +1,21 @@
+CardListResponse:
+  description: List of available cards
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: '../schemas/Card.yaml#/Card'
+      example:
+        - providerId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          siteId: "8eee5a92-bf75-4c08-9860-b92c2e0eb5e5"
+          code: "WPZDN-KPXZ7PPG37"
+          amount: 950
+          currency: EUR
+          isValid: true
+        - providerId: "7e121c0a-1b77-400c-88ff-e28ecedcef10"
+          siteId: "390ec188-58e7-469c-a1a2-1b47ecd878af"
+          code: "PROHD-KART7PPG37"
+          amount: 950
+          currency: EUR
+          isValid: true

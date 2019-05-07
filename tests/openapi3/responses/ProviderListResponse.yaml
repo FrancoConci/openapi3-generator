@@ -1,0 +1,23 @@
+ProviderListResponse:
+  description: List of available providers
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: '../schemas/Provider.yaml#/Provider'
+      example:
+        - id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          name: "Gurado"
+          description: "provider description, e.g. 'Gurado'"
+          supportsCurrencies: true
+          accessDetailNames:
+            - "consumerKey"
+            - "password" 
+        - id: "390ec188-58e7-469c-a1a2-1b47ecd878af"
+          name: "Extrabooking"
+          description: "provider description, e.g. 'Extrabooking'"
+          supportsCurrencies: true
+          accessDetailNames:
+            - "apiKey"
+            - "apiSecret" 

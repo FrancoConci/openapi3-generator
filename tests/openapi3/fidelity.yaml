@@ -1,0 +1,503 @@
+openapi: 3.0.0
+servers:
+  - description: Authentication server mock
+    url: 'https://fidelity.mergeport.com/v1/'
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Mergeport6/Fidelity/0.0.1
+info:
+  contact: 
+    name: Mergeport support
+    email: hello@mergeport.com
+    url: http://www.mergeport.com
+  version: 1.0.0
+  title: Mergeport Fidelity
+  description: > 
+    ### Introduction 
+      Mergeport Fidelity unites the web services for loyalty cards, vouchers and coupons within one API. We use the wording _Card_ to define a generic voucher, loyalty or value card.
+    ### Provider activation
+      First, you'll need to [retrieve](#api-Provider-listProviders) the list of available providers. Once you have identified the provider, you can [activate](#api-Provider-ProviderActivate) it with the corresponding access details e.g. _api key_ and _api secret_. These access details will be provided by the provider.
+    
+    ### Card validity check
+      In order to use _active_ cards you will need to [check](#api-Card-checkCard) its validity first. This operation will also provide some information about the card, such as provider and remaining value. Once found, you can [top up](#api-Card-topUpCard) the card or use it for [payment](#api-Card-chargeCard).
+    
+    ### Offline card
+      Offline cards are cards that already have a code, but have yet to be [activated](#api-Card-activateCard). Once a offline card is active, you can perform top-up or charge operations.
+# update examples
+security:
+  - password:
+      - read
+      - write
+paths:
+  /card:
+    get:
+      x-visibility: internal
+      tags:
+        - Card
+      summary: Retrieve all cards
+      description: This operation retrieves the list of all available cards.
+      operationId: CardList
+      responses:
+        '200':
+          $ref: 'responses/CardListResponse.yaml#/CardListResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+    post:
+      x-visibility: internal
+      tags:
+        - Card
+      summary: Create a new card
+      description: this operation creates a new card
+      operationId: CardCreate
+      requestBody:
+        $ref: 'requestBodies/CardCreateRequest.yaml#/CardCreateRequest'
+      responses:
+        '200':
+          $ref: 'responses/CardCreateResponse.yaml#/CardCreateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /card/{id}:
+    x-visibility: internal
+    get:
+      tags:
+        - Card
+      summary: Get card details
+      operationId: CardGet
+      parameters:
+        - name: id
+          in: path
+          description: the card id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: 'responses/CardGetResponse.yaml#/CardGetResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    put:
+      tags:
+        - Card
+      parameters:
+        - name: id
+          in: path
+          description: the provider id card by Mergeport
+          required: true
+          schema:
+            type: string
+      summary: Update a card
+      operationId: CardUpdate
+      requestBody:
+        $ref: 'requestBodies/CardUpdateRequest.yaml#/CardUpdateRequest'
+      responses:
+        '200':
+          $ref: 'responses/CardUpdateResponse.yaml#/CardUpdateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    delete:
+      tags:
+        - Card
+      summary: Delete a card
+      operationId: CardDelete
+      parameters:
+        - name: id
+          in: path
+          description: the card id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: 'responses/OperationResult.yaml#/OperationResult'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /card/{code}/check:
+    get:
+      x-noCrud: true
+      tags:
+        - Card
+      summary: Check card validity
+      operationId: CardCheck
+      parameters:
+        - name: code
+          in: path
+          description: the card code that identifies the voucher, loyalty or value card.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: 'responses/CardResponse.yaml#/CardResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound' 
+  /card/{code}/topUp:
+    put:
+      tags:
+        - Card
+      summary: Top up card
+      operationId: CardTopUp
+      x-noCrud: true
+      parameters:
+        - name: code
+          in: path
+          description: the card code that identifies the voucher, loyalty or value card.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: 'requestBodies/CardTopUpRequest.yaml#/CardTopUpRequest'
+      responses:
+        '200':
+          $ref: 'responses/OperationResult.yaml#/OperationResult'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /card/{code}/charge:
+    put:
+      tags:
+        - Card
+      summary: Charge card
+      operationId: CardCharge
+      x-noCrud: true
+      parameters:
+        - name: code
+          in: path
+          description: the card code that identifies the voucher, loyalty or value card.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: 'requestBodies/CardChargeRequest.yaml#/CardChargeRequest'
+      responses:
+        '200':
+          $ref: 'responses/OperationResult.yaml#/OperationResult'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /card/{code}/activate:
+    put:
+      tags:
+        - Card
+      summary: Activate card
+      operationId: CardActivate
+      x-noCrud: true
+      parameters:
+        - name: code
+          in: path
+          description: the card code that identifies the voucher, loyalty or value card.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: 'requestBodies/CardActivateRequest.yaml#/CardActivateRequest'
+      responses:
+        '200':
+          $ref: 'responses/OperationResult.yaml#/OperationResult'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /provider:
+    get:
+      tags:
+        - Provider
+      summary: Retrieve all providers
+      description: This operation retrieves the list of all available providers.
+      operationId: ListProviders
+      responses:
+        '200':
+          $ref: 'responses/ProviderListResponse.yaml#/ProviderListResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+    post:
+      x-visibility: internal
+      tags:
+        - Provider
+      summary: Create a new provider
+      description: this operation creates a new provider
+      operationId: ProviderCreate
+      requestBody:
+        $ref: 'requestBodies/ProviderCreateRequest.yaml#/ProviderCreateRequest'
+      responses:
+        '200':
+          $ref: 'responses/ProviderCreateResponse.yaml#/ProviderCreateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /provider/{id}:
+    x-visibility: internal
+    get:
+      tags:
+        - Provider
+      summary: Get provider details
+      operationId: ProviderGet
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: 'responses/ProviderGetResponse.yaml#/ProviderGetResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    put:
+      tags:
+        - Provider
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      summary: Update a provider
+      operationId: ProviderUpdate
+      requestBody:
+        $ref: 'requestBodies/ProviderUpdateRequest.yaml#/ProviderUpdateRequest'
+      responses:
+        '200':
+          $ref: 'responses/ProviderUpdateResponse.yaml#/ProviderUpdateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    delete:
+      tags:
+        - Provider
+      summary: Delete a provider
+      operationId: ProviderDelete
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: 'responses/OperationResult.yaml#/OperationResult'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /provider/{id}/configure:
+    x-noCrud: true
+    get:
+      tags:
+        - Provider
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      summary: retrieves provider access details
+      operationId: ProviderConfigureGet
+      responses:
+        '200':
+          $ref: 'responses/ProviderConfigureGetResponse.yaml#/ProviderConfigureGetResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    post:
+      tags:
+        - Provider
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      summary: create provider access details
+      operationId: ProviderConfigureCreate
+      x-requestBodies: ProviderConfigureCreateRequest
+      requestBody:
+        $ref: 'requestBodies/ProviderConfigureCreateRequest.yaml#/ProviderConfigureCreateRequest'
+      responses:
+        '200':
+          $ref: 'responses/ProviderConfigureCreateResponse.yaml#/ProviderConfigureCreateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    put:
+      tags:
+        - Provider
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      summary: Update provider access details
+      operationId: ProviderConfigureUpdate
+      x-requestBodies: ProviderConfigureUpdateRequest
+      requestBody:
+        $ref: 'requestBodies/ProviderConfigureUpdateRequest.yaml#/ProviderConfigureUpdateRequest'
+      responses:
+        '200':
+          $ref: 'responses/ProviderConfigureUpdateResponse.yaml#/ProviderConfigureUpdateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    delete:
+      tags:
+        - Provider
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      summary: Update provider access details
+      operationId: ProviderConfigureDelete
+      responses:
+        '200':
+          $ref: 'responses/OperationResult.yaml#/OperationResult'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+  /site:
+    x-visibility: internal
+    get:
+      tags:
+        - Site
+      summary: Retrieve all Site
+      description: This operation retrieves the list of all Site.
+      operationId: SiteList
+      responses:
+        '200':
+          $ref: 'responses/SiteListResponse.yaml#/SiteListResponse'
+  /site/{id}:
+    x-indexes:
+      primary: siteId
+      local:
+        - providerId
+    x-visibility: internal
+    post:
+      tags:
+        - Site
+      summary: Create a new Site
+      description: this operation creates a new Site
+      operationId: SiteCreate
+      parameters:
+        - name: id
+          in: path
+          description: the site id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: 'requestBodies/SiteCreateRequest.yaml#/SiteCreateRequest'
+      responses:
+        '200':
+          $ref: 'responses/SiteCreateResponse.yaml#/SiteCreateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    get:
+      tags:
+        - Site
+      summary: Get Site details
+      operationId: SiteGet
+      parameters:
+        - name: id
+          in: path
+          description: the site id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: 'responses/SiteGetResponse.yaml#/SiteGetResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    put:
+      tags:
+        - Site
+      parameters:
+        - name: id
+          in: path
+          description: the site id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      summary: Update a Site
+      operationId: SiteUpdate
+      requestBody:
+        $ref: 'requestBodies/SiteUpdateRequest.yaml#/SiteUpdateRequest'
+      responses:
+        '200':
+          $ref: 'responses/SiteUpdateResponse.yaml#/SiteUpdateResponse'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+    delete:
+      tags:
+        - Site
+      summary: Delete a Site
+      operationId: SiteDelete
+      parameters:
+        - name: id
+          in: path
+          description: the provider id provided by Mergeport
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: 'responses/OperationResult.yaml#/OperationResult'
+        '401':
+          $ref: 'responses/Unauthorized.yaml#/Unauthorized'
+        '404':
+          $ref: 'responses/NotFound.yaml#/NotFound'
+
+components:
+  schemas:
+    Card:
+      $ref: 'schemas/Card.yaml#/Card'
+    Provider:
+          $ref: 'schemas/Provider.yaml#/Provider'
+    AccessDetail:
+      $ref: 'schemas/AccessDetail.yaml#/AccessDetail'
+    ProviderDetails:
+      $ref: 'schemas/ProviderDetails.yaml#/ProviderDetails'
+    Site:
+      $ref: 'schemas/Site.yaml#/Site'
+  securitySchemes:
+    password:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources

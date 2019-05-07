@@ -1,0 +1,20 @@
+Provider:
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: provider id provided by Mergeport
+    name:
+      type: string
+      description: name of the provider
+    description:
+      type: string
+      description: additional information about the provider
+    supportsCurrencies:
+      type: boolean
+      description: specifies if the given provider support currencies
+    accessDetailNames:
+      description: names of access details required by the provider, e.g. "apiKey", "apiSecret"
+      type: array
+      items:
+        type: string

@@ -1,0 +1,17 @@
+ProviderDetails:
+  # this might be changed with the introduction of the licensing portal.
+  properties:
+    providerId:
+      type: string
+      format: uuid
+      description: provider id
+    name:
+      type: string
+      description: provider name
+    accessDetails:
+      type: array
+      items:
+        $ref: 'AccessDetail.yaml#/AccessDetail'
+  required:
+    - providerId
+    - accessDetails 

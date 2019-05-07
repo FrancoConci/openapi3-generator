@@ -1,0 +1,22 @@
+SiteUpdateRequest:
+  x-visibility: internal
+  content:
+    application/json:
+      schema:
+        x-visibility: internal
+        properties:
+          description:
+            type: string
+          providerDetails:
+            type: array
+            items:
+              $ref: '../schemas/ProviderDetails.yaml#/ProviderDetails'
+              description: provider details
+        required:
+          - providerDetails
+      example: 
+        accessDetails: 
+          - name: "apiKey"
+            value: d33a0278-fa9c-477d-b6cf-90ea74e43a79
+          - name: "apiSecret"
+            value: 0ade3890-4044-4910-819f-f77268ca5713

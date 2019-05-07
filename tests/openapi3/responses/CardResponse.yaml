@@ -1,0 +1,13 @@
+CardResponse:
+  description: Card info
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/Card.yaml#/Card'
+      example:
+        providerId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        siteId: "8eee5a92-bf75-4c08-9860-b92c2e0eb5e5"
+        code: "WPZDN-KPXZ7PPG37"
+        amount: 950
+        currency: EUR
+        isValid: true

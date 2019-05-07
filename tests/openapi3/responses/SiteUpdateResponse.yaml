@@ -1,0 +1,15 @@
+SiteUpdateResponse:
+  x-visibility: internal
+  description: Details of a site
+  content:
+    application/json:
+      schema: 
+        $ref: '../schemas/Site.yaml#/Site'
+      example:
+        id: f17dfc3d-e20a-4010-abac-cb67d7ff04ee
+        description: da Luigi
+        providerDetails: 
+          - providerId
+          - accessDetail:
+            - name
+            - value

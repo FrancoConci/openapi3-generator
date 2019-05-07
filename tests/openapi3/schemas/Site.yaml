@@ -1,0 +1,19 @@
+Site:
+  # this might be changed with the introduction of the licensing portal.
+  x-visibility: internal
+  properties:
+    id:
+      description: id provided by Mergeport
+      type: string
+      format: uuid      
+    description:
+      description: site description
+      type: string
+    providerDetails:
+      type: array
+      items:
+        $ref: 'ProviderDetails.yaml#/ProviderDetails'
+        description: provider details
+  required:
+    - id
+    - providerDetails

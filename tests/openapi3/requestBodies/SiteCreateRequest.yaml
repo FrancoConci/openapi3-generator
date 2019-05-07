@@ -1,0 +1,25 @@
+SiteCreateRequest:
+  x-visibility: internal
+  content:
+    application/json:
+      schema:
+        x-visibility: internal
+        properties:
+          description:
+            type: string
+          providerDetails:
+            type: array
+            items:
+              $ref: '../schemas/ProviderDetails.yaml#/ProviderDetails'
+              description: provider details
+        required:
+          - providerDetails
+      example:
+        description: site description, e.g. 'da Luigi'
+        providerDetails: 
+          - providerId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            accessDetails:
+            - name: "apiKey"
+              value: d33a0278-fa9c-477d-b6cf-90ea74e43a79
+            - name: "apiSecret"
+              value: 0ade3890-4044-4910-819f-f77268ca5713
